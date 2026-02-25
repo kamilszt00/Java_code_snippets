@@ -18,6 +18,7 @@ class HighToLow {
                 
                 
                 """);
+
         boolean notReady = true;
 
         while (notReady) {
@@ -60,7 +61,45 @@ class HighToLow {
     }
 
     static void game_start(int low, int high) {
+        Scanner skan = new Scanner(System.in);
         IO.println("Game starts here");
-        IO.println("Those are the numbers " + low + " " + high);
+        IO.println("The range is from: " + low + " to: " + high);
+
+        IO.println("The game starts now");
+        boolean notGuessed = true;
+        int guesses = 0;
+        int num_picked_machine = number_gen(low,high);
+
+        while (notGuessed) {
+            IO.println("What's your guess?: ");
+            int guess = skan.nextInt();
+            IO.println(guess);
+            if (guess > high || guess < low) {
+                IO.println("Your guess is outside of the range, please pick the number in range");
+                guesses++;
+                continue;
+            } else if( guess == num_picked_machine) {
+                guesses++;
+                IO.println("You guessed the number!!!");
+                notGuessed = false;
+            } else if(guess > num_picked_machine) {
+                IO.println("Too high");
+                guesses++;
+                continue;
+            } else if(guess < num_picked_machine) {
+                IO.println("Too low");
+                guesses++;
+                continue;
+            }
+        }
+        IO.println(guesses);
+
+
+
+
+    }
+
+    static int number_gen(int low, int high) {
+        return (int) ((Math.random() * ((high + 1) - low)) + low);    
     }
 }
